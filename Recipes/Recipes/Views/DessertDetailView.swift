@@ -13,15 +13,28 @@ struct DessertDetailView: View {
     @State private var dessertDetail: MealDetail?
 
     var body: some View {
-        VStack {
-            if let dessertDetail = dessertDetail {
-                if let imageURL = URL(string: dessert.imageURL) {
-                    AsyncImage(url: imageURL, scale: 5)
+        VStack(alignment: .leading) {
+            if let imageURL = URL(string: dessert.imageURL) {
+                AsyncImage(url: imageURL) { image in
+                    image
+                        .resizable()
+                        .scaledToFill()
+                } placeholder: {
+                    Color.pastelPink
                 }
-                Text(dessertDetail.strMeal)
-            } else {
-                Text("Sorry, there has been an error fetching that dessert!")
+                .frame(height: UIScreen.main.bounds.height / 3.5)
+                .clipped()
+                .shadow(radius: 5)
             }
+
+            if let dessertDetail = dessertDetail {
+                dessertDetails(dessertDetail)
+            } else {
+                Text("Sorry, there has been an error fetching the dessert details.")
+                    .padding()
+            }
+
+            Spacer()
         }
         .onAppear {
             Task {
@@ -33,6 +46,36 @@ struct DessertDetailView: View {
             }
         }
     }
+    
+    private func dessertDetails(_ dessertDetail: MealDetail) -> some View {
+        VStack(alignment: .leading, spacing: 16) {
+            Text(dessertDetail.strMeal)
+                .font(.title)
+                .fontWeight(.bold)
+                .foregroundColor(.black)
+            HStack {
+                Image(systemName: "mappin.and.ellipse.circle.fill")
+                    .frame(width: 22)
+                    .foregroundColor(Color.pastelPink)
+                Text(dessertDetail.strArea)
+                    .font(.callout)
+            }
+            ingredientsList(dessertDetail)
+
+        }
+        .padding()
+    }
+    
+    private func ingredientsList(_ dessertDetail: MealDetail) -> some View {
+        VStack(alignment: .leading, spacing: 8) { // Adjust spacing as needed
+            ForEach(viewModel.getIngredients(mealDetail: dessertDetail), id: \.self) { ingredient in
+                HStack {
+                    Text(ingredient.measurement)
+                        .frame(width: 100, alignment: .leading) // Adjust width as needed
+                    Text(ingredient.ingredient)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                }
+            }
+        }
+    }
 }
-
-

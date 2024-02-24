@@ -14,6 +14,7 @@ struct RecipesApp: App {
             NavigationStack {
                 HomeView()
             }
+            .tint(Color.pastelPink)
         }
     }
 }
