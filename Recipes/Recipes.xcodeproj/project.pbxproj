@@ -16,6 +16,8 @@
 		38579D792B8995C400CB6045 /* RecipesUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38579D782B8995C400CB6045 /* RecipesUITestsLaunchTests.swift */; };
 		38579D892B89971C00CB6045 /* Dessert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38579D882B89971C00CB6045 /* Dessert.swift */; };
 		38579D8B2B89981C00CB6045 /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38579D8A2B89981C00CB6045 /* HomeViewModel.swift */; };
+		38579D8D2B899A7800CB6045 /* DessertDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38579D8C2B899A7800CB6045 /* DessertDetails.swift */; };
+		38579D8F2B899B4B00CB6045 /* DessertDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38579D8E2B899B4B00CB6045 /* DessertDetailView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -48,6 +50,8 @@
 		38579D782B8995C400CB6045 /* RecipesUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipesUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		38579D882B89971C00CB6045 /* Dessert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dessert.swift; sourceTree = "<group>"; };
 		38579D8A2B89981C00CB6045 /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
+		38579D8C2B899A7800CB6045 /* DessertDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DessertDetails.swift; sourceTree = "<group>"; };
+		38579D8E2B899B4B00CB6045 /* DessertDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DessertDetailView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -137,6 +141,7 @@
 			isa = PBXGroup;
 			children = (
 				38579D882B89971C00CB6045 /* Dessert.swift */,
+				38579D8C2B899A7800CB6045 /* DessertDetails.swift */,
 			);
 			path = NetworkingLayer;
 			sourceTree = "<group>";
@@ -145,6 +150,7 @@
 			isa = PBXGroup;
 			children = (
 				38579D5D2B8995C000CB6045 /* HomeView.swift */,
+				38579D8E2B899B4B00CB6045 /* DessertDetailView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -288,6 +294,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				38579D5E2B8995C000CB6045 /* HomeView.swift in Sources */,
+				38579D8D2B899A7800CB6045 /* DessertDetails.swift in Sources */,
+				38579D8F2B899B4B00CB6045 /* DessertDetailView.swift in Sources */,
 				38579D892B89971C00CB6045 /* Dessert.swift in Sources */,
 				38579D5C2B8995C000CB6045 /* RecipesApp.swift in Sources */,
 				38579D8B2B89981C00CB6045 /* HomeViewModel.swift in Sources */,

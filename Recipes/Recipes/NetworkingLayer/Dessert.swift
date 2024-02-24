@@ -9,7 +9,7 @@ import Foundation
 
 // MARK: - Structs for Dessert
 
-struct Dessert: Codable, Identifiable {
+struct Dessert: Codable, Identifiable, Hashable {
     let title: String
     let imageURL: String
     let id: String
@@ -30,24 +30,12 @@ struct DessertResponse: Codable {
 }
 
 class DessertManager {
-    func fetchDessert(completion: @escaping (Result<DessertResponse, Error>) -> Void) {
+    func fetchDessert() async throws -> DessertResponse {
         guard let url = URL(string: "https://themealdb.com/api/json/v1/1/filter.php?c=Dessert") else {
-            completion(.failure(NSError(domain: "Invalid URL", code: 0, userInfo: nil)))
-            return
+            throw NSError(domain: "Invalid URL", code: 0, userInfo: nil)
         }
 
-        URLSession.shared.dataTask(with: url) { (data, response, error) in
-            guard let data = data, error == nil else {
-                completion(.failure(error!))
-                return
-            }
-
-            do {
-                let dessertResponse = try JSONDecoder().decode(DessertResponse.self, from: data)
-                completion(.success(dessertResponse))
-            } catch {
-                completion(.failure(error))
-            }
-        }.resume()
+        let (data, _) = try await URLSession.shared.data(from: url)
+        return try JSONDecoder().decode(DessertResponse.self, from: data)
     }
 }
