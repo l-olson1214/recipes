@@ -11,6 +11,8 @@ struct HomeView: View {
     var viewModel = HomeViewModel()
     @State var dessert: [Dessert] = []
     @State var details: MealDetail? = nil
+    @State private var searchText = ""
+    @State private var isSearching = false
     
     var body: some View {
         VStack(spacing: 16) {
@@ -18,7 +20,7 @@ struct HomeView: View {
                 .font(.title)
                 .fontWeight(.bold)
                 .foregroundColor(Color.pastelPink)
-            
+            SearchBarView(searchText: $searchText, isSearching: $isSearching)
             dessertList
         }
         .padding()
@@ -32,11 +34,20 @@ struct HomeView: View {
             }
         }
     }
-    
+
+
+    private var filteredDesserts: [Dessert] {
+        if searchText.isEmpty {
+            return dessert
+        } else {
+            return dessert.filter { $0.title.localizedCaseInsensitiveContains(searchText) }
+        }
+    }
+
     private var dessertList: some View {
         ScrollView {
             VStack(spacing: 32) {
-                ForEach(dessert, id: \.id) { dessert in
+                ForEach(filteredDesserts, id: \.id) { dessert in
                     NavigationLink(destination: DessertDetailView(dessert: dessert, viewModel: viewModel)) {
                         ZStack {
                             RoundedRectangle(cornerRadius: 10)
