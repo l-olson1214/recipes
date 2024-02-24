@@ -76,6 +76,5 @@ class MealDetailManager {
         let (data, _) = try await URLSession.shared.data(from: url)
         return try JSONDecoder().decode(MealDetailResponse.self, from: data)
     }
-    
 }
 
