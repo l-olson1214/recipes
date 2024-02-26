@@ -9,7 +9,7 @@ import CoreData
 import SwiftUI
 
 struct HomeView: View {
-    @ObservedObject var viewModel = HomeViewModel()
+    @EnvironmentObject var viewModel: HomeViewModel
     @State var dessert: [Dessert] = []
     @State var details: MealDetail? = nil
     @State private var searchText = ""
@@ -32,11 +32,14 @@ struct HomeView: View {
 
                 Spacer()
 
-                NavigationLink(destination: FavoritesView(viewModel: viewModel)) {
+                NavigationLink(destination: FavoritesView()
+                        .environmentObject(viewModel)
+                ) {
                     Image(systemName: "heart.fill")
                         .foregroundColor(Color.pastelPink)
                         .padding(8)
                 }
+                .navigationBarBackButtonHidden(true)
             }
             SearchBarView(searchText: $searchText, isSearching: $isSearching)
             dessertList
@@ -66,7 +69,9 @@ struct HomeView: View {
         ScrollView {
             VStack(spacing: 32) {
                 ForEach(filteredDesserts, id: \.id) { dessert in
-                    NavigationLink(destination: DessertDetailView(dessert: dessert, viewModel: viewModel)) {
+                    NavigationLink(destination: DessertDetailView(dessert: dessert)
+                        .environmentObject(viewModel)
+                    ) {
                         ZStack(alignment: .topTrailing) {
                             RoundedRectangle(cornerRadius: 10)
                                 .foregroundColor(.white)

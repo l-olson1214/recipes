@@ -9,10 +9,13 @@ import SwiftUI
 
 @main
 struct RecipesApp: App {
+    @StateObject private var viewModel = HomeViewModel()
+
     var body: some Scene {
         WindowGroup {
             NavigationStack {
                 HomeView()
+                    .environmentObject(viewModel)
             }
             .tint(Color.pastelPink)
         }

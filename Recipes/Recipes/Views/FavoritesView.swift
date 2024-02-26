@@ -8,14 +8,28 @@
 import SwiftUI
 
 struct FavoritesView: View {
-    @ObservedObject var viewModel: HomeViewModel
+    @EnvironmentObject var viewModel: HomeViewModel
     
     var body: some View {
         VStack {
-            Text("Favorites")
-                .font(.title)
-                .fontWeight(.bold)
-                .foregroundColor(Color.pastelPink)
+            HStack {
+                Text("Favorites")
+                    .font(.title)
+                    .fontWeight(.bold)
+                    .foregroundColor(Color.pastelPink)
+                    .frame(maxWidth: .infinity)
+
+                Spacer()
+
+                NavigationLink(destination: HomeView()
+                        .environmentObject(viewModel)
+                ) {
+                    Image(systemName: "house.fill")
+                        .foregroundColor(Color.pastelPink)
+                        .padding(8)
+                }
+                .navigationBarBackButtonHidden(true)
+            }
             favoritesList
         }
         .padding()
@@ -25,7 +39,10 @@ struct FavoritesView: View {
         ScrollView {
             VStack(spacing: 32) {
                 ForEach($viewModel.favorites.wrappedValue, id: \.id) { dessert in
-                    NavigationLink(destination: DessertDetailView(dessert: dessert, viewModel: viewModel)) {
+                    NavigationLink(destination:
+                        DessertDetailView(dessert: dessert)
+                            .environmentObject(viewModel)
+                    ) {
                         ZStack(alignment: .topTrailing) {
                             RoundedRectangle(cornerRadius: 10)
                                 .foregroundColor(.white)
@@ -78,5 +95,5 @@ struct FavoritesView: View {
 }
 
 #Preview {
-    FavoritesView(viewModel: HomeViewModel())
+    FavoritesView()
 }

@@ -9,7 +9,7 @@ import SwiftUI
 
 struct DessertDetailView: View {
     var dessert: Dessert
-    var viewModel: HomeViewModel
+    @EnvironmentObject var viewModel: HomeViewModel
     @State private var dessertDetail: MealDetail?
 
     var body: some View {
