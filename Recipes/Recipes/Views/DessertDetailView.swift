@@ -51,10 +51,19 @@ struct DessertDetailView: View {
     
     private func dessertDetails(_ dessertDetail: MealDetail) -> some View {
         VStack(alignment: .leading, spacing: 32) {
-            Text(dessertDetail.strMeal)
-                .font(.title)
-                .fontWeight(.bold)
-                .foregroundColor(.black)
+            HStack {
+                Text(dessertDetail.strMeal)
+                    .font(.title)
+                    .fontWeight(.bold)
+                    .foregroundColor(.black)
+                Spacer()
+                Button(action: {
+                    print("favorite")
+                }) {
+                    Image(systemName: "heart.fill")
+                        .foregroundColor(Color.pastelPink)
+                }
+            }
             HStack {
                 Image(systemName: "mappin.and.ellipse.circle.fill")
                     .frame(width: 22)
