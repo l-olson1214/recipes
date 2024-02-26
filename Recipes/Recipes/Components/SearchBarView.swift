@@ -16,7 +16,7 @@ struct SearchBarView: View {
             Image(systemName: "magnifyingglass")
                 .foregroundColor(Color.pastelPink)
                 .padding(.leading, 8)
-            TextField("Search desserts", text: $searchText)
+            TextField("Search", text: $searchText)
                 .padding(.leading, 8)
             Spacer()
         }

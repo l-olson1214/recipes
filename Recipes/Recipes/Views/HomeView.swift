@@ -61,18 +61,18 @@ struct HomeView: View {
         }
     }
     
-    private var filteredDesserts: [Dessert] {
+    private func filteredDesserts(list: [Dessert]) -> [Dessert] {
         if searchText.isEmpty {
-            return dessert
+            return list
         } else {
-            return dessert.filter { $0.title.localizedCaseInsensitiveContains(searchText) }
+            return list.filter { $0.title.localizedCaseInsensitiveContains(searchText) }
         }
     }
 
     private var dessertList: some View {
         ScrollView {
             VStack(spacing: 32) {
-                ForEach(isFavorites ? viewModel.favorites : filteredDesserts, id: \.id) { dessert in
+                ForEach(isFavorites ? filteredDesserts(list: viewModel.favorites) : filteredDesserts(list: dessert), id: \.id) { dessert in
                     NavigationLink(destination: DessertDetailView(dessert: dessert)
                         .environmentObject(viewModel)
                     ) {

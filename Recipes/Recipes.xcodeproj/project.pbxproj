@@ -139,7 +139,6 @@
 				38579D862B8996B200CB6045 /* Views */,
 				38579D852B8996A900CB6045 /* NetworkingLayer */,
 				38579D5B2B8995C000CB6045 /* RecipesApp.swift */,
-				38579D5F2B8995C400CB6045 /* Assets.xcassets */,
 				38579D612B8995C400CB6045 /* Preview Content */,
 			);
 			path = Recipes;
@@ -184,6 +183,7 @@
 			children = (
 				38579D5D2B8995C000CB6045 /* HomeView.swift */,
 				38579D8E2B899B4B00CB6045 /* DessertDetailView.swift */,
+				38579D5F2B8995C400CB6045 /* Assets.xcassets */,
 			);
 			path = Views;
 			sourceTree = "<group>";
