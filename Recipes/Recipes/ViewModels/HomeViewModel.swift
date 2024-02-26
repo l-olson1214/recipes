@@ -48,13 +48,16 @@ class HomeViewModel: ObservableObject {
             } else {
                 let newFavorite = FavoriteDessert(context: context)
                 newFavorite.id = dessert.id
-                favorites.append(Dessert(title: dessert.title, imageURL: dessert.imageURL, id: dessert.id))
+                newFavorite.name = dessert.title
+                newFavorite.imageURL = dessert.imageURL
+                favorites.append(dessert)
             }
             coreDataService.saveContext()
         } catch {
             fatalError("Error toggling favorite: \(error)")
         }
     }
+
     
     func isFavorite(dessert: Dessert) -> Bool {
         let dessertID = dessert.id
