@@ -14,6 +14,7 @@ struct HomeView: View {
     @State var details: MealDetail? = nil
     @State private var searchText = ""
     @State private var isSearching = false
+    @State private var isFavorites = false
     
     @FetchRequest(
         entity: FavoriteDessert.entity(),
@@ -24,7 +25,7 @@ struct HomeView: View {
     var body: some View {
         VStack(spacing: 16) {
             HStack {
-                Text("Desserts")
+                Text(isFavorites ? "Favorites" : "Desserts")
                     .font(.title)
                     .fontWeight(.bold)
                     .foregroundColor(Color.pastelPink)
@@ -32,12 +33,15 @@ struct HomeView: View {
 
                 Spacer()
 
-                NavigationLink(destination: FavoritesView()
-                        .environmentObject(viewModel)
-                ) {
-                    Image(systemName: "heart.fill")
-                        .foregroundColor(Color.pastelPink)
-                        .padding(8)
+                Button {
+                    isFavorites.toggle()
+                } label: {
+                    HStack {
+                        Text(isFavorites ? "Home" : "Favorites")
+                        Image(systemName: isFavorites ? "house.fill" : "heart.fill")
+                            .foregroundColor(Color.pastelPink)
+                            .padding(8)
+                    }
                 }
                 .navigationBarBackButtonHidden(true)
             }
@@ -64,11 +68,11 @@ struct HomeView: View {
             return dessert.filter { $0.title.localizedCaseInsensitiveContains(searchText) }
         }
     }
-    
+
     private var dessertList: some View {
         ScrollView {
             VStack(spacing: 32) {
-                ForEach(filteredDesserts, id: \.id) { dessert in
+                ForEach(isFavorites ? viewModel.favorites : filteredDesserts, id: \.id) { dessert in
                     NavigationLink(destination: DessertDetailView(dessert: dessert)
                         .environmentObject(viewModel)
                     ) {
@@ -85,7 +89,6 @@ struct HomeView: View {
             }
         }
     }
-    
     private func dessertImage(url: String, title: String) -> some View {
         VStack(spacing: 0) {
             AsyncImage(url: URL(string: url)) { image in

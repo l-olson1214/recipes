@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		3824DE822B8C2E7300F0641F /* FavoritesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3824DE812B8C2E7300F0641F /* FavoritesView.swift */; };
 		3824DE882B8C309500F0641F /* FavoriteDessert+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3824DE862B8C309500F0641F /* FavoriteDessert+CoreDataClass.swift */; };
 		3824DE892B8C309500F0641F /* FavoriteDessert+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3824DE872B8C309500F0641F /* FavoriteDessert+CoreDataProperties.swift */; };
 		38253CA42B8C359A005E1860 /* FavoriteDesserts.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 38253CA22B8C359A005E1860 /* FavoriteDesserts.xcdatamodeld */; };
@@ -45,7 +44,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		3824DE812B8C2E7300F0641F /* FavoritesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesView.swift; sourceTree = "<group>"; };
 		3824DE862B8C309500F0641F /* FavoriteDessert+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FavoriteDessert+CoreDataClass.swift"; sourceTree = SOURCE_ROOT; };
 		3824DE872B8C309500F0641F /* FavoriteDessert+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FavoriteDessert+CoreDataProperties.swift"; sourceTree = SOURCE_ROOT; };
 		38253CA32B8C359A005E1860 /* FavoriteDesserts.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = FavoriteDesserts.xcdatamodel; sourceTree = "<group>"; };
@@ -186,7 +184,6 @@
 			children = (
 				38579D5D2B8995C000CB6045 /* HomeView.swift */,
 				38579D8E2B899B4B00CB6045 /* DessertDetailView.swift */,
-				3824DE812B8C2E7300F0641F /* FavoritesView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -332,7 +329,6 @@
 			files = (
 				3824DE882B8C309500F0641F /* FavoriteDessert+CoreDataClass.swift in Sources */,
 				38579D5E2B8995C000CB6045 /* HomeView.swift in Sources */,
-				3824DE822B8C2E7300F0641F /* FavoritesView.swift in Sources */,
 				38579D8D2B899A7800CB6045 /* DessertDetails.swift in Sources */,
 				38253CA42B8C359A005E1860 /* FavoriteDesserts.xcdatamodeld in Sources */,
 				38934C312B8C263300C612CE /* CoreDataServiceClass.swift in Sources */,
