@@ -57,12 +57,6 @@ struct DessertDetailView: View {
                     .fontWeight(.bold)
                     .foregroundColor(.black)
                 Spacer()
-                Button(action: {
-                    print("favorite")
-                }) {
-                    Image(systemName: "heart.fill")
-                        .foregroundColor(Color.pastelPink)
-                }
             }
             HStack {
                 Image(systemName: "mappin.and.ellipse.circle.fill")
