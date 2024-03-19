@@ -31,6 +31,7 @@ struct HomeView: View {
                     .fontWeight(.bold)
                     .foregroundColor(Color.pastelPink)
                     .frame(maxWidth: .infinity, alignment: .leading)
+                    .accessibilityLabel(Text("\(isFavorites ? "Favorites" : "Desserts") : Header"))
 
                 Spacer()
 
@@ -44,6 +45,7 @@ struct HomeView: View {
                             .padding(8)
                     }
                 }
+                .accessibilityLabel("\(isFavorites ? "Home" : "Favorites") page")
                 .navigationBarBackButtonHidden(true)
             }
             SearchBarView(searchText: $searchText, isSearching: $isSearching)
@@ -92,7 +94,7 @@ struct HomeView: View {
                                 .foregroundColor(.white)
                                 .shadow(color: Color.black.opacity(0.07), radius: 10, x: 5, y: 5)
                             
-                            dessertImage(url: dessert.imageURL, title: dessert.title)
+                            dessertInfo(url: dessert.imageURL, title: dessert.title)
                             favoritesButton(dessert: dessert)
                         }
                     }
@@ -100,7 +102,8 @@ struct HomeView: View {
             }
         }
     }
-    private func dessertImage(url: String, title: String) -> some View {
+
+    private func dessertInfo(url: String, title: String) -> some View {
         VStack(spacing: 0) {
             AsyncImage(url: URL(string: url)) { image in
                 image
@@ -145,6 +148,7 @@ struct HomeView: View {
             isFavorite: { dessert in
                 favoritesViewModel.isFavorite(dessert: dessert)
             })
+        
     }
 }
 

@@ -27,5 +27,9 @@ struct FavoriteButtonView: View {
                 .padding(8)
                 .shadow(radius: 5)
         })
+        .focusable()
+        .accessibilityElement(children: .combine)
+        .accessibilityLabel("Favorite: \(isFavorite(dessert).description)")
+        .accessibilityAddTraits(.isButton)
     }
 }

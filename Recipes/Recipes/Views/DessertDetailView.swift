@@ -66,6 +66,7 @@ struct DessertDetailView: View {
                 Image(systemName: "mappin.and.ellipse.circle.fill")
                     .frame(width: 22)
                     .foregroundColor(Color.pastelPink)
+                    .accessibilityHidden(true)
                 Text(dessertDetail.strArea)
                     .font(.callout)
             }
@@ -82,9 +83,12 @@ struct DessertDetailView: View {
                     Image(systemName: "circle.fill")
                         .frame(height: 8)
                         .foregroundColor(Color.pastelPink)
+                        .accessibilityHidden(true)
                     Text(ingredient.measurement)
                     Text(ingredient.ingredient.capitalized)
                 }
+                .accessibilityElement(children: .combine)
+                .accessibilityLabel(Text("\(ingredient.measurement) \(ingredient.ingredient)"))
             }
         }
     }

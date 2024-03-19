@@ -22,6 +22,8 @@ struct SearchBarView: View {
                 .focused($isTextFieldFocused)
             Spacer()
         }
+        .accessibilityElement(children: .combine)
+        .accessibilityAddTraits(.isButton)
         .padding()
         .background(Color(.systemGray5))
         .cornerRadius(8)
