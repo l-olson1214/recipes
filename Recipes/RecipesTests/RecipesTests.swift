@@ -13,7 +13,7 @@ final class RecipesTests: XCTestCase {
     
     override func setUp() {
         super.setUp()
-        viewModel = HomeViewModel()
+        viewModel = HomeViewModel(networkManager: NetworkManager())
     }
     
     override func tearDown() {
@@ -24,10 +24,10 @@ final class RecipesTests: XCTestCase {
     func testFetchDesserts() {
         let expectation = XCTestExpectation(description: "Fetch desserts")
 
-        let dessertManager = DessertManager()
+        let networkManager = NetworkManager()
         Task {
             do {
-                let dessertResponse = try await dessertManager.fetchDessert()
+                let dessertResponse = try await networkManager.fetchDessert()
                 XCTAssertFalse(dessertResponse.desserts.isEmpty, "Dessert list should not be empty")
                 expectation.fulfill()
             } catch {
@@ -41,10 +41,10 @@ final class RecipesTests: XCTestCase {
     func testFetchMealDetail() {
         let expectation = XCTestExpectation(description: "Fetch meal detail")
         
-        let mealDetailManager = MealDetailManager()
+        let networkManager = NetworkManager()
         Task {
             do {
-                let mealDetailResponse = try await mealDetailManager.fetchMealDetail(byID: "52767")
+                let mealDetailResponse = try await networkManager.fetchMealDetail(byID: "52767")
                 guard let mealDetail = mealDetailResponse.meals.first else {
                     XCTFail("No meal detail found")
                     return

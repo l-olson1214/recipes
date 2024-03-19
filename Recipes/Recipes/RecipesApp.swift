@@ -9,7 +9,7 @@ import SwiftUI
 
 @main
 struct RecipesApp: App {
-    @StateObject private var viewModel = HomeViewModel()
+    @StateObject private var viewModel = HomeViewModel(networkManager: NetworkManager())
 
     var body: some Scene {
         WindowGroup {

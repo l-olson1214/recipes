@@ -12,9 +12,11 @@ class HomeViewModel: ObservableObject {
     var dessertList: [Dessert] = []
     @Published var favorites: [Dessert] = []
     let coreDataService: CoreDataService
+    let networkManager: NetworkManager
     
-    init(coreDataService: CoreDataService = CoreDataService.shared) {
+    init(coreDataService: CoreDataService = CoreDataService.shared, networkManager: NetworkManager) {
         self.coreDataService = coreDataService
+        self.networkManager = networkManager
         self.favorites = loadFavorites()
     }
     
@@ -57,7 +59,6 @@ class HomeViewModel: ObservableObject {
             fatalError("Error toggling favorite: \(error)")
         }
     }
-
     
     func isFavorite(dessert: Dessert) -> Bool {
         let dessertID = dessert.id
@@ -66,25 +67,15 @@ class HomeViewModel: ObservableObject {
     }
     
     func fetchDesserts() async throws -> [Dessert] {
-        let dessertManager = DessertManager()
-        let dessertResponse = try await dessertManager.fetchDessert()
+        let dessertResponse = try await networkManager.fetchDessert()
         return dessertResponse.desserts
     }
     
     func fetchMealDetail(byID id: String) async throws -> MealDetail {
-        let mealDetailManager = MealDetailManager()
-        let mealDetailResponse = try await mealDetailManager.fetchMealDetail(byID: id)
+        let mealDetailResponse = try await networkManager.fetchMealDetail(byID: id)
         guard let mealDetail = mealDetailResponse.meals.first else {
             throw NSError(domain: "No meal detail found", code: 0, userInfo: nil)
         }
         return mealDetail
     }
-}
-
-
-// MARK: - Ingredient Struct
-
-struct Ingredient: Hashable {
-    var measurement: String
-    var ingredient: String
 }

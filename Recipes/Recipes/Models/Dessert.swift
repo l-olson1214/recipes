@@ -28,14 +28,3 @@ struct DessertResponse: Codable {
         case desserts = "meals"
     }
 }
-
-class DessertManager {
-    func fetchDessert() async throws -> DessertResponse {
-        guard let url = URL(string: "https://themealdb.com/api/json/v1/1/filter.php?c=Dessert") else {
-            throw NSError(domain: "Invalid URL", code: 0, userInfo: nil)
-        }
-
-        let (data, _) = try await URLSession.shared.data(from: url)
-        return try JSONDecoder().decode(DessertResponse.self, from: data)
-    }
-}

@@ -11,7 +11,6 @@ import SwiftUI
 struct HomeView: View {
     @EnvironmentObject var viewModel: HomeViewModel
     @State var dessert: [Dessert] = []
-    @State var details: MealDetail? = nil
     @State private var searchText = ""
     @State private var isSearching = false
     @State private var isFavorites = false
@@ -29,7 +28,7 @@ struct HomeView: View {
                     .font(.title)
                     .fontWeight(.bold)
                     .foregroundColor(Color.pastelPink)
-                    .frame(maxWidth: .infinity)
+                    .frame(maxWidth: .infinity, alignment: .leading)
 
                 Spacer()
 
@@ -71,7 +70,7 @@ struct HomeView: View {
 
     private var dessertList: some View {
         ScrollView {
-            VStack(spacing: 32) {
+            LazyVStack(spacing: 32) {
                 ForEach(isFavorites ? filteredDesserts(list: viewModel.favorites) : filteredDesserts(list: dessert), id: \.id) { dessert in
                     NavigationLink(destination: DessertDetailView(dessert: dessert)
                         .environmentObject(viewModel)
