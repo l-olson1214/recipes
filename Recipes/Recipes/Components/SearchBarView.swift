@@ -10,6 +10,7 @@ import SwiftUI
 struct SearchBarView: View {
     @Binding var searchText: String
     @Binding var isSearching: Bool
+    @FocusState private var isTextFieldFocused: Bool
     
     var body: some View {
         HStack {
@@ -18,6 +19,7 @@ struct SearchBarView: View {
                 .padding(.leading, 8)
             TextField("Search", text: $searchText)
                 .padding(.leading, 8)
+                .focused($isTextFieldFocused)
             Spacer()
         }
         .padding()
@@ -25,6 +27,7 @@ struct SearchBarView: View {
         .cornerRadius(8)
         .onTapGesture {
             isSearching = true
+            isTextFieldFocused = true
         }
     }
 }

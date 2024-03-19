@@ -118,10 +118,9 @@ struct HomeView: View {
                         )
                     )
             } placeholder: {
-                Color.pastelPink
+                ProgressView()
                     .frame(maxWidth: .infinity)
                     .frame(height: 150)
-                    .clipped()
             }
             
             HStack {
