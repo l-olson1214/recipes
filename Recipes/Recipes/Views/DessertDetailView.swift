@@ -9,8 +9,9 @@ import SwiftUI
 
 struct DessertDetailView: View {
     var dessert: Dessert
-    @EnvironmentObject var viewModel: HomeViewModel
-    @State private var dessertDetail: MealDetail?
+    var viewModel: DessertDetailViewModel
+    var favoritesViewModel: FavoritesViewModel
+    @State private var loadedDessertDetail: MealDetail?
 
     var body: some View {
         ScrollView {
@@ -28,23 +29,18 @@ struct DessertDetailView: View {
                     .shadow(radius: 5)
                 }
                 
-                if let dessertDetail = dessertDetail {
+                if let dessertDetail = loadedDessertDetail {
                     dessertDetails(dessertDetail)
                 } else {
-                    Text("Sorry, there has been an error fetching the dessert details.")
-                        .padding()
+                    ProgressView()
                 }
                 
                 Spacer()
             }
-            .onAppear {
-                Task {
-                    do {
-                        dessertDetail = try await viewModel.fetchMealDetail(byID: dessert.id)
-                    } catch {
-                        print("Error fetching meal detail: \(error)")
-                    }
-                }
+        }
+        .onAppear {
+            Task {
+                loadedDessertDetail = await viewModel.dessertDetail
             }
         }
     }
@@ -57,6 +53,14 @@ struct DessertDetailView: View {
                     .fontWeight(.bold)
                     .foregroundColor(.black)
                 Spacer()
+                FavoriteButtonView(
+                    dessert: dessert,
+                    toggleFavorite: { dessert in
+                        favoritesViewModel.toggleFavorite(dessert: dessert)
+                    },
+                    isFavorite: { dessert in
+                        favoritesViewModel.isFavorite(dessert: dessert)
+                    })
             }
             HStack {
                 Image(systemName: "mappin.and.ellipse.circle.fill")
@@ -67,7 +71,6 @@ struct DessertDetailView: View {
             }
             ingredientsList(dessertDetail)
             instructions(dessertDetail)
-
         }
         .padding()
     }
@@ -76,15 +79,11 @@ struct DessertDetailView: View {
         VStack(alignment: .leading, spacing: 8) {
             ForEach(viewModel.getIngredients(mealDetail: dessertDetail), id: \.self) { ingredient in
                 HStack {
-                    HStack {
-                        Image(systemName: "circle.fill")
-                            .frame(height: 8)
-                            .foregroundColor(Color.pastelPink)
-                        Text(ingredient.measurement)
-                            .frame(width: 150, alignment: .leading)
-                    }
+                    Image(systemName: "circle.fill")
+                        .frame(height: 8)
+                        .foregroundColor(Color.pastelPink)
+                    Text(ingredient.measurement)
                     Text(ingredient.ingredient.capitalized)
-                        .frame(maxWidth: .infinity, alignment: .leading)
                 }
             }
         }

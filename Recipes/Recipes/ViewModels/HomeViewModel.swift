@@ -10,72 +10,14 @@ import Foundation
 
 class HomeViewModel: ObservableObject {
     var dessertList: [Dessert] = []
-    @Published var favorites: [Dessert] = []
-    let coreDataService: CoreDataService
-    let networkManager: NetworkManager
+    let networkManager: NetworkRepository
     
-    init(coreDataService: CoreDataService = CoreDataService.shared, networkManager: NetworkManager) {
-        self.coreDataService = coreDataService
+    init(networkManager: NetworkRepository) {
         self.networkManager = networkManager
-        self.favorites = loadFavorites()
     }
-    
-    func loadFavorites() -> [Dessert] {
-        let context = coreDataService.persistentContainer.viewContext
-        let fetchRequest: NSFetchRequest<FavoriteDessert> = FavoriteDessert.fetchRequest()
-        
-        do {
-            let favoriteDesserts = try context.fetch(fetchRequest)
-            let favorites = favoriteDesserts.map { favoriteDessert in
-                let id = favoriteDessert.id
-                let name = favoriteDessert.name
-                let imageURL = favoriteDessert.imageURL ?? ""
-                return Dessert(title: name, imageURL: imageURL, id: id)
-            }
-            return favorites
-        } catch {
-            fatalError("Error loading favorites: \(error)")
-        }
-    }
-    
-    func toggleFavorite(dessert: Dessert) {
-        let context = coreDataService.persistentContainer.viewContext
-        let fetchRequest: NSFetchRequest<FavoriteDessert> = FavoriteDessert.fetchRequest()
-        fetchRequest.predicate = NSPredicate(format: "id == %@", dessert.id)
-        
-        do {
-            if let existingFavorite = try context.fetch(fetchRequest).first {
-                context.delete(existingFavorite)
-                favorites.removeAll { $0.id == dessert.id }
-            } else {
-                let newFavorite = FavoriteDessert(context: context)
-                newFavorite.id = dessert.id
-                newFavorite.name = dessert.title
-                newFavorite.imageURL = dessert.imageURL
-                favorites.append(dessert)
-            }
-            coreDataService.saveContext()
-        } catch {
-            fatalError("Error toggling favorite: \(error)")
-        }
-    }
-    
-    func isFavorite(dessert: Dessert) -> Bool {
-        let dessertID = dessert.id
-        
-        return favorites.contains { $0.id == dessertID }
-    }
-    
+
     func fetchDesserts() async throws -> [Dessert] {
         let dessertResponse = try await networkManager.fetchDessert()
         return dessertResponse.desserts
-    }
-    
-    func fetchMealDetail(byID id: String) async throws -> MealDetail {
-        let mealDetailResponse = try await networkManager.fetchMealDetail(byID: id)
-        guard let mealDetail = mealDetailResponse.meals.first else {
-            throw NSError(domain: "No meal detail found", code: 0, userInfo: nil)
-        }
-        return mealDetail
     }
 }

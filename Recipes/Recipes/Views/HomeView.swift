@@ -10,6 +10,7 @@ import SwiftUI
 
 struct HomeView: View {
     @EnvironmentObject var viewModel: HomeViewModel
+    @StateObject var favoritesViewModel = FavoritesViewModel()
     @State var dessert: [Dessert] = []
     @State private var searchText = ""
     @State private var isSearching = false
@@ -71,10 +72,15 @@ struct HomeView: View {
     private var dessertList: some View {
         ScrollView {
             LazyVStack(spacing: 32) {
-                ForEach(isFavorites ? filteredDesserts(list: viewModel.favorites) : filteredDesserts(list: dessert), id: \.id) { dessert in
-                    NavigationLink(destination: DessertDetailView(dessert: dessert)
-                        .environmentObject(viewModel)
-                    ) {
+                ForEach(isFavorites ? filteredDesserts(list: favoritesViewModel.favorites) : filteredDesserts(list: dessert), id: \.id) { dessert in
+                    NavigationLink(
+                        destination: DessertDetailView(
+                            dessert: dessert,
+                            viewModel: DessertDetailViewModel(
+                                networkManager: viewModel.networkManager,
+                                id: dessert.id),
+                            favoritesViewModel: favoritesViewModel))
+                        {
                         ZStack(alignment: .topTrailing) {
                             RoundedRectangle(cornerRadius: 10)
                                 .foregroundColor(.white)
@@ -126,20 +132,14 @@ struct HomeView: View {
     }
     
     private func favoritesButton(dessert: Dessert) -> some View {
-        Button(action: {
-            viewModel.toggleFavorite(dessert: dessert)
-        }, label: {
-            RoundedRectangle(cornerRadius: 10)
-                .fill(Color.white)
-                .frame(width: 40, height: 40)
-                .overlay(
-                    Image(systemName: viewModel.isFavorite(dessert: dessert) ? "heart.fill" : "heart")
-                        .foregroundColor(Color.pastelPink)
-                        .padding(8)
-                )
-                .padding(8)
-                .shadow(radius: 5)
-        })
+        FavoriteButtonView(
+            dessert: dessert,
+            toggleFavorite: { dessert in
+                favoritesViewModel.toggleFavorite(dessert: dessert)
+            },
+            isFavorite: { dessert in
+                favoritesViewModel.isFavorite(dessert: dessert)
+            })
     }
 }
 

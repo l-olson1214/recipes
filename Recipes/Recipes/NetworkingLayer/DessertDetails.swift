@@ -9,7 +9,7 @@ import Foundation
 
 import Foundation
 
-class NetworkManager {
+class NetworkRepository {
     private var cache: [URL: Data] = [:]
 
     func fetchMealDetail(byID id: String) async throws -> MealDetailResponse {

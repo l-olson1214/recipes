@@ -1,13 +1,40 @@
 //
-//  HomeViewModelExtension.swift
+//  DessertDetailViewModel.swift
 //  Recipes
 //
-//  Created by Lindsey Olson on 2/25/24.
+//  Created by Lindsey Olson on 3/18/24.
 //
 
+import CoreData
 import Foundation
 
-extension HomeViewModel {
+class DessertDetailViewModel: ObservableObject {
+    let networkManager: NetworkRepository
+    let id: String
+    var dessertDetail: MealDetail? {
+        get async {
+            do {
+                return try await fetchMealDetail(byID: id)
+            } catch {
+                print("Error fetching meal detail")
+                return nil
+            }
+        }
+    }
+
+    init(networkManager: NetworkRepository, id: String) {
+        self.networkManager = networkManager
+        self.id = id
+    }
+    
+    func fetchMealDetail(byID id: String) async throws -> MealDetail {
+        let mealDetailResponse = try await networkManager.fetchMealDetail(byID: id)
+        guard let mealDetail = mealDetailResponse.meals.first else {
+            throw NSError(domain: "No meal detail found", code: 0, userInfo: nil)
+        }
+        return mealDetail
+    }
+    
     // MARK: - Ingredients
     func getNonNullIngredients(from mealDetail: MealDetail) -> [String] {
         return [

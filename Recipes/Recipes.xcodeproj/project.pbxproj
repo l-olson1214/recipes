@@ -9,6 +9,9 @@
 /* Begin PBXBuildFile section */
 		382455DD2B9A451100B4F16F /* MealDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 382455DC2B9A451100B4F16F /* MealDetail.swift */; };
 		382455DF2B9A453E00B4F16F /* Ingredients.swift in Sources */ = {isa = PBXBuildFile; fileRef = 382455DE2B9A453E00B4F16F /* Ingredients.swift */; };
+		382455E12BA9263B00B4F16F /* DessertDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 382455E02BA9263B00B4F16F /* DessertDetailViewModel.swift */; };
+		382455E32BA92AA200B4F16F /* FavoriteButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 382455E22BA92AA200B4F16F /* FavoriteButtonView.swift */; };
+		382455E52BA92C5300B4F16F /* FavoritesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 382455E42BA92C5300B4F16F /* FavoritesViewModel.swift */; };
 		3824DE882B8C309500F0641F /* FavoriteDessert+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3824DE862B8C309500F0641F /* FavoriteDessert+CoreDataClass.swift */; };
 		3824DE892B8C309500F0641F /* FavoriteDessert+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3824DE872B8C309500F0641F /* FavoriteDessert+CoreDataProperties.swift */; };
 		38253CA42B8C359A005E1860 /* FavoriteDesserts.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 38253CA22B8C359A005E1860 /* FavoriteDesserts.xcdatamodeld */; };
@@ -24,7 +27,6 @@
 		38579D8D2B899A7800CB6045 /* DessertDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38579D8C2B899A7800CB6045 /* DessertDetails.swift */; };
 		38579D8F2B899B4B00CB6045 /* DessertDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38579D8E2B899B4B00CB6045 /* DessertDetailView.swift */; };
 		38579D942B8AA19900CB6045 /* SearchBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38579D932B8AA19900CB6045 /* SearchBarView.swift */; };
-		38934C2F2B8C25A900C612CE /* HomeViewModelExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38934C2E2B8C25A900C612CE /* HomeViewModelExtension.swift */; };
 		38934C312B8C263300C612CE /* CoreDataServiceClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38934C302B8C263300C612CE /* CoreDataServiceClass.swift */; };
 /* End PBXBuildFile section */
 
@@ -48,6 +50,9 @@
 /* Begin PBXFileReference section */
 		382455DC2B9A451100B4F16F /* MealDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MealDetail.swift; sourceTree = "<group>"; };
 		382455DE2B9A453E00B4F16F /* Ingredients.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Ingredients.swift; sourceTree = "<group>"; };
+		382455E02BA9263B00B4F16F /* DessertDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DessertDetailViewModel.swift; sourceTree = "<group>"; };
+		382455E22BA92AA200B4F16F /* FavoriteButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteButtonView.swift; sourceTree = "<group>"; };
+		382455E42BA92C5300B4F16F /* FavoritesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesViewModel.swift; sourceTree = "<group>"; };
 		3824DE862B8C309500F0641F /* FavoriteDessert+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FavoriteDessert+CoreDataClass.swift"; sourceTree = SOURCE_ROOT; };
 		3824DE872B8C309500F0641F /* FavoriteDessert+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FavoriteDessert+CoreDataProperties.swift"; sourceTree = SOURCE_ROOT; };
 		38253CA32B8C359A005E1860 /* FavoriteDesserts.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = FavoriteDesserts.xcdatamodel; sourceTree = "<group>"; };
@@ -66,7 +71,6 @@
 		38579D8C2B899A7800CB6045 /* DessertDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DessertDetails.swift; sourceTree = "<group>"; };
 		38579D8E2B899B4B00CB6045 /* DessertDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DessertDetailView.swift; sourceTree = "<group>"; };
 		38579D932B8AA19900CB6045 /* SearchBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBarView.swift; sourceTree = "<group>"; };
-		38934C2E2B8C25A900C612CE /* HomeViewModelExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModelExtension.swift; sourceTree = "<group>"; };
 		38934C302B8C263300C612CE /* CoreDataServiceClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataServiceClass.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -120,6 +124,7 @@
 			isa = PBXGroup;
 			children = (
 				38579D932B8AA19900CB6045 /* SearchBarView.swift */,
+				382455E22BA92AA200B4F16F /* FavoriteButtonView.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -206,7 +211,8 @@
 			isa = PBXGroup;
 			children = (
 				38579D8A2B89981C00CB6045 /* HomeViewModel.swift */,
-				38934C2E2B8C25A900C612CE /* HomeViewModelExtension.swift */,
+				382455E02BA9263B00B4F16F /* DessertDetailViewModel.swift */,
+				382455E42BA92C5300B4F16F /* FavoritesViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -343,6 +349,8 @@
 			files = (
 				382455DF2B9A453E00B4F16F /* Ingredients.swift in Sources */,
 				3824DE882B8C309500F0641F /* FavoriteDessert+CoreDataClass.swift in Sources */,
+				382455E52BA92C5300B4F16F /* FavoritesViewModel.swift in Sources */,
+				382455E12BA9263B00B4F16F /* DessertDetailViewModel.swift in Sources */,
 				382455DD2B9A451100B4F16F /* MealDetail.swift in Sources */,
 				38579D5E2B8995C000CB6045 /* HomeView.swift in Sources */,
 				38579D8D2B899A7800CB6045 /* DessertDetails.swift in Sources */,
@@ -353,7 +361,7 @@
 				3824DE892B8C309500F0641F /* FavoriteDessert+CoreDataProperties.swift in Sources */,
 				38579D892B89971C00CB6045 /* Dessert.swift in Sources */,
 				38579D5C2B8995C000CB6045 /* RecipesApp.swift in Sources */,
-				38934C2F2B8C25A900C612CE /* HomeViewModelExtension.swift in Sources */,
+				382455E32BA92AA200B4F16F /* FavoriteButtonView.swift in Sources */,
 				38579D8B2B89981C00CB6045 /* HomeViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

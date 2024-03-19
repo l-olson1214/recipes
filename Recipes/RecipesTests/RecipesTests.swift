@@ -13,7 +13,7 @@ final class RecipesTests: XCTestCase {
     
     override func setUp() {
         super.setUp()
-        viewModel = HomeViewModel(networkManager: NetworkManager())
+        viewModel = HomeViewModel(networkManager: NetworkRepository())
     }
     
     override func tearDown() {
@@ -24,7 +24,7 @@ final class RecipesTests: XCTestCase {
     func testFetchDesserts() {
         let expectation = XCTestExpectation(description: "Fetch desserts")
 
-        let networkManager = NetworkManager()
+        let networkManager = NetworkRepository()
         Task {
             do {
                 let dessertResponse = try await networkManager.fetchDessert()
@@ -41,7 +41,7 @@ final class RecipesTests: XCTestCase {
     func testFetchMealDetail() {
         let expectation = XCTestExpectation(description: "Fetch meal detail")
         
-        let networkManager = NetworkManager()
+        let networkManager = NetworkRepository()
         Task {
             do {
                 let mealDetailResponse = try await networkManager.fetchMealDetail(byID: "52767")
