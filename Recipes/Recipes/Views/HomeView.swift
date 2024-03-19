@@ -15,6 +15,7 @@ struct HomeView: View {
     @State private var searchText = ""
     @State private var isSearching = false
     @State private var isFavorites = false
+    @State private var isLoading: Bool = true
     
     @FetchRequest(
         entity: FavoriteDessert.entity(),
@@ -46,14 +47,19 @@ struct HomeView: View {
                 .navigationBarBackButtonHidden(true)
             }
             SearchBarView(searchText: $searchText, isSearching: $isSearching)
-            dessertList
-                
+            if isLoading {
+                ProgressView()
+                Spacer()
+            } else {
+                dessertList
+            }
         }
         .padding()
         .onAppear {
             Task {
                 do {
                     dessert = try await viewModel.fetchDesserts()
+                    isLoading = false
                 } catch {
                     print("Error fetching desserts: \(error)")
                 }
