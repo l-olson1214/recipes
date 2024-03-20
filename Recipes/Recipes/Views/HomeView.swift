@@ -16,6 +16,13 @@ struct HomeView: View {
     @State private var isSearching = false
     @State private var isFavorites = false
     @State private var isLoading: Bool = true
+    private var filteredDessertList: [Dessert] {
+        if isFavorites {
+            return filteredDesserts(list: favoritesViewModel.favorites)
+        } else {
+            return filteredDesserts(list: dessert)
+        }
+    }
     
     @FetchRequest(
         entity: FavoriteDessert.entity(),
@@ -82,31 +89,29 @@ struct HomeView: View {
     private var dessertList: some View {
         ScrollView {
             LazyVStack(spacing: 32) {
-                if (isFavorites ? filteredDesserts(list: favoritesViewModel.favorites) : filteredDesserts(list: dessert)).isEmpty {
-                    // TODO: Update this to be cleaner
+                if filteredDessertList.isEmpty {
                     Text("Sorry, no desserts could be found.")
                 } else {
-                    ForEach(isFavorites ? filteredDesserts(list: favoritesViewModel.favorites) : filteredDesserts(list: dessert), id: \.id) { dessert in
-                        HStack(alignment: .top) {
-                            NavigationLink(
-                                destination: DessertDetailView(
-                                    dessert: dessert,
-                                    viewModel: DessertDetailViewModel(
-                                        networkManager: viewModel.networkManager,
-                                        id: dessert.id),
-                                    favoritesViewModel: favoritesViewModel))
-                            {
-                                ZStack(alignment: .topTrailing) {
-                                    RoundedRectangle(cornerRadius: 10)
-                                        .foregroundColor(.white)
-                                        .shadow(color: Color.black.opacity(0.07), radius: 10, x: 5, y: 5)
-                                    
+                    ForEach(filteredDessertList, id: \.id) { dessert in
+                        ZStack {
+                            RoundedRectangle(cornerRadius: 10)
+                                .foregroundColor(.white)
+                                .shadow(color: Color.black.opacity(0.07), radius: 10, x: 10, y: 5)
+                            HStack(alignment: .top) {
+                                NavigationLink(
+                                    destination: DessertDetailView(
+                                        dessert: dessert,
+                                        viewModel: DessertDetailViewModel(
+                                            networkManager: viewModel.networkManager,
+                                            id: dessert.id),
+                                        favoritesViewModel: favoritesViewModel))
+                                {
                                     dessertInfo(url: dessert.imageURL, title: dessert.title)
+                                    .accessibilityElement(children: .combine)
+                                    .accessibilityLabel(Text("\(dessert.title) - navigate to detail page"))
                                 }
-                                .accessibilityElement(children: .combine)
-                                .accessibilityLabel(Text("\(dessert.title) - navigate to detail page"))
+                                favoritesButton(dessert: dessert)
                             }
-                            favoritesButton(dessert: dessert)
                         }
                     }
                 }
