@@ -45,7 +45,7 @@ struct HomeView: View {
                             .padding(8)
                     }
                 }
-                .accessibilityLabel("\(isFavorites ? "Home" : "Favorites") page")
+                .accessibilityLabel("Navigate to \(isFavorites ? "Home" : "Favorites") page")
                 .navigationBarBackButtonHidden(true)
             }
             SearchBarView(searchText: $searchText, isSearching: $isSearching)
@@ -73,28 +73,39 @@ struct HomeView: View {
         if searchText.isEmpty {
             return list
         } else {
-            return list.filter { $0.title.localizedCaseInsensitiveContains(searchText) }
+            return list.filter { 
+                $0.title.localizedCaseInsensitiveContains(searchText)
+            }
         }
     }
 
     private var dessertList: some View {
         ScrollView {
             LazyVStack(spacing: 32) {
-                ForEach(isFavorites ? filteredDesserts(list: favoritesViewModel.favorites) : filteredDesserts(list: dessert), id: \.id) { dessert in
-                    NavigationLink(
-                        destination: DessertDetailView(
-                            dessert: dessert,
-                            viewModel: DessertDetailViewModel(
-                                networkManager: viewModel.networkManager,
-                                id: dessert.id),
-                            favoritesViewModel: favoritesViewModel))
-                        {
-                        ZStack(alignment: .topTrailing) {
-                            RoundedRectangle(cornerRadius: 10)
-                                .foregroundColor(.white)
-                                .shadow(color: Color.black.opacity(0.07), radius: 10, x: 5, y: 5)
-                            
-                            dessertInfo(url: dessert.imageURL, title: dessert.title)
+                if (isFavorites ? filteredDesserts(list: favoritesViewModel.favorites) : filteredDesserts(list: dessert)).isEmpty {
+                    // TODO: Update this to be cleaner
+                    Text("Sorry, no desserts could be found.")
+                } else {
+                    ForEach(isFavorites ? filteredDesserts(list: favoritesViewModel.favorites) : filteredDesserts(list: dessert), id: \.id) { dessert in
+                        HStack(alignment: .top) {
+                            NavigationLink(
+                                destination: DessertDetailView(
+                                    dessert: dessert,
+                                    viewModel: DessertDetailViewModel(
+                                        networkManager: viewModel.networkManager,
+                                        id: dessert.id),
+                                    favoritesViewModel: favoritesViewModel))
+                            {
+                                ZStack(alignment: .topTrailing) {
+                                    RoundedRectangle(cornerRadius: 10)
+                                        .foregroundColor(.white)
+                                        .shadow(color: Color.black.opacity(0.07), radius: 10, x: 5, y: 5)
+                                    
+                                    dessertInfo(url: dessert.imageURL, title: dessert.title)
+                                }
+                                .accessibilityElement(children: .combine)
+                                .accessibilityLabel(Text("\(dessert.title) - navigate to detail page"))
+                            }
                             favoritesButton(dessert: dessert)
                         }
                     }
@@ -148,7 +159,6 @@ struct HomeView: View {
             isFavorite: { dessert in
                 favoritesViewModel.isFavorite(dessert: dessert)
             })
-        
     }
 }
 

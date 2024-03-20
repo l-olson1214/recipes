@@ -16,20 +16,13 @@ struct FavoriteButtonView: View {
         Button(action: {
             toggleFavorite(dessert)
         }, label: {
-            RoundedRectangle(cornerRadius: 10)
-                .fill(Color.white)
-                .frame(width: 40, height: 40)
-                .overlay(
-                    Image(systemName: isFavorite(dessert) ? "heart.fill" : "heart")
-                        .foregroundColor(Color.pastelPink)
-                        .padding(8)
-                )
+            Image(systemName: isFavorite(dessert) ? "heart.fill" : "heart")
+                .foregroundColor(Color.pastelPink)
                 .padding(8)
-                .shadow(radius: 5)
+                .frame(width: 40, height: 40)
         })
         .focusable()
         .accessibilityElement(children: .combine)
-        .accessibilityLabel("Favorite: \(isFavorite(dessert).description)")
-        .accessibilityAddTraits(.isButton)
+        .accessibilityLabel("\(dessert.title) Favorited: \(isFavorite(dessert).description)")
     }
 }

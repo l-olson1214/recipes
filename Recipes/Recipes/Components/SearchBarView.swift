@@ -23,7 +23,7 @@ struct SearchBarView: View {
             Spacer()
         }
         .accessibilityElement(children: .combine)
-        .accessibilityAddTraits(.isButton)
+        .accessibilityAddTraits(.isSearchField)
         .padding()
         .background(Color(.systemGray5))
         .cornerRadius(8)
