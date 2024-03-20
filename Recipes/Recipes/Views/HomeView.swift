@@ -33,29 +33,13 @@ struct HomeView: View {
     var body: some View {
         VStack(spacing: 16) {
             HStack {
-                Text(isFavorites ? "Favorites" : "Desserts")
-                    .font(.title)
-                    .fontWeight(.bold)
-                    .foregroundColor(Color.pastelPink)
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                    .accessibilityLabel(Text("\(isFavorites ? "Favorites" : "Desserts") : Header"))
-
+                header
                 Spacer()
-
-                Button {
-                    isFavorites.toggle()
-                } label: {
-                    HStack {
-                        Text(isFavorites ? "Home" : "Favorites")
-                        Image(systemName: isFavorites ? "house.fill" : "heart.fill")
-                            .foregroundColor(Color.pastelPink)
-                            .padding(8)
-                    }
-                }
-                .accessibilityLabel("Navigate to \(isFavorites ? "Home" : "Favorites") page")
-                .navigationBarBackButtonHidden(true)
+                togglePage
             }
+
             SearchBarView(searchText: $searchText, isSearching: $isSearching)
+
             if isLoading {
                 ProgressView()
                 Spacer()
@@ -75,6 +59,30 @@ struct HomeView: View {
             }
         }
     }
+
+    private var header: some View {
+        Text(isFavorites ? "Favorites" : "Desserts")
+            .font(.title)
+            .fontWeight(.bold)
+            .foregroundColor(Color.pastelPink)
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .accessibilityLabel(Text("\(isFavorites ? "Favorites" : "Desserts") : Header"))
+    }
+
+    private var togglePage: some View {
+        Button {
+            isFavorites.toggle()
+        } label: {
+            HStack {
+                Text(isFavorites ? "Home" : "Favorites")
+                Image(systemName: isFavorites ? "house.fill" : "heart.fill")
+                    .foregroundColor(Color.pastelPink)
+                    .padding(8)
+            }
+        }
+        .accessibilityLabel("Navigate to \(isFavorites ? "Home" : "Favorites") page")
+        .navigationBarBackButtonHidden(true)
+    }
     
     private func filteredDesserts(list: [Dessert]) -> [Dessert] {
         if searchText.isEmpty {
@@ -93,77 +101,15 @@ struct HomeView: View {
                     Text("Sorry, no desserts could be found.")
                 } else {
                     ForEach(filteredDessertList, id: \.id) { dessert in
-                        ZStack {
-                            RoundedRectangle(cornerRadius: 10)
-                                .foregroundColor(.white)
-                                .shadow(color: Color.black.opacity(0.07), radius: 10, x: 10, y: 5)
-                            HStack(alignment: .top) {
-                                NavigationLink(
-                                    destination: DessertDetailView(
-                                        dessert: dessert,
-                                        viewModel: DessertDetailViewModel(
-                                            networkManager: viewModel.networkManager,
-                                            id: dessert.id),
-                                        favoritesViewModel: favoritesViewModel))
-                                {
-                                    dessertInfo(url: dessert.imageURL, title: dessert.title)
-                                    .accessibilityElement(children: .combine)
-                                    .accessibilityLabel(Text("\(dessert.title) - navigate to detail page"))
-                                }
-                                favoritesButton(dessert: dessert)
-                            }
-                        }
+                        DessertItemView(
+                            dessert: dessert,
+                            viewModel: viewModel,
+                            favoritesViewModel: favoritesViewModel
+                        )
                     }
                 }
             }
         }
-    }
-
-    private func dessertInfo(url: String, title: String) -> some View {
-        VStack(spacing: 0) {
-            AsyncImage(url: URL(string: url)) { image in
-                image
-                    .resizable()
-                    .aspectRatio(contentMode: .fill)
-                    .frame(maxWidth: .infinity)
-                    .frame(height: 150)
-                    .clipped()
-                    .clipShape(
-                        .rect(
-                            topLeadingRadius: 10,
-                            bottomLeadingRadius: 0,
-                            bottomTrailingRadius: 0,
-                            topTrailingRadius: 10
-                        )
-                    )
-            } placeholder: {
-                ProgressView()
-                    .frame(maxWidth: .infinity)
-                    .frame(height: 150)
-            }
-            
-            HStack {
-                Text(title)
-                    .font(.headline)
-                    .foregroundColor(Color.pastelPink)
-                Spacer()
-                Image(systemName: "chevron.right")
-                    .frame(width: 24)
-                    .foregroundColor(Color.pastelPink)
-            }
-            .padding()
-        }
-    }
-    
-    private func favoritesButton(dessert: Dessert) -> some View {
-        FavoriteButtonView(
-            dessert: dessert,
-            toggleFavorite: { dessert in
-                favoritesViewModel.toggleFavorite(dessert: dessert)
-            },
-            isFavorite: { dessert in
-                favoritesViewModel.isFavorite(dessert: dessert)
-            })
     }
 }
 
