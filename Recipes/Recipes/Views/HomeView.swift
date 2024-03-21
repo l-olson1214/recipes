@@ -10,11 +10,11 @@ import SwiftUI
 
 struct HomeView: View {
     @EnvironmentObject var viewModel: HomeViewModel
-    @StateObject var favoritesViewModel = FavoritesViewModel()
+    @EnvironmentObject var favoritesViewModel: FavoritesViewModel
     @State var dessert: [Dessert] = []
     @State private var searchText = ""
     @State private var isSearching = false
-    @State private var isFavorites = false
+    @State private var isFavorites: Bool = false
     @State private var isLoading: Bool = true
     private var filteredDessertList: [Dessert] {
         if isFavorites {
@@ -22,6 +22,10 @@ struct HomeView: View {
         } else {
             return filteredDesserts(list: dessert)
         }
+    }
+    
+    public init(isFavorites: Bool = false) {
+        _isFavorites = State(initialValue: isFavorites)
     }
     
     @FetchRequest(
@@ -32,11 +36,7 @@ struct HomeView: View {
     
     var body: some View {
         VStack(spacing: 16) {
-            HStack {
-                header
-                Spacer()
-                togglePage
-            }
+            header
 
             SearchBarView(searchText: $searchText, isSearching: $isSearching)
 
@@ -67,21 +67,6 @@ struct HomeView: View {
             .foregroundColor(Color.pastelPink)
             .frame(maxWidth: .infinity, alignment: .leading)
             .accessibilityLabel(Text("\(isFavorites ? "Favorites" : "Desserts") : Header"))
-    }
-
-    private var togglePage: some View {
-        Button {
-            isFavorites.toggle()
-        } label: {
-            HStack {
-                Text(isFavorites ? "Home" : "Favorites")
-                Image(systemName: isFavorites ? "house.fill" : "heart.fill")
-                    .foregroundColor(Color.pastelPink)
-                    .padding(8)
-            }
-        }
-        .accessibilityLabel("Navigate to \(isFavorites ? "Home" : "Favorites") page")
-        .navigationBarBackButtonHidden(true)
     }
     
     private func filteredDesserts(list: [Dessert]) -> [Dessert] {
@@ -114,5 +99,5 @@ struct HomeView: View {
 }
 
 #Preview {
-    HomeView()
+    HomeView(isFavorites: false)
 }
