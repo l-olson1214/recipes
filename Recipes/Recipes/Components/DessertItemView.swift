@@ -9,8 +9,8 @@ import SwiftUI
 
 struct DessertItemView: View {
     let dessert: Dessert
-    let viewModel: HomeViewModel
-    let favoritesViewModel: FavoritesViewModel
+    @StateObject var viewModel: HomeViewModel
+    @StateObject var favoritesViewModel: FavoritesViewModel
 
     var body: some View {
         ZStack {
