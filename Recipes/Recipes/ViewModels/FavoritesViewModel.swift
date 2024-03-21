@@ -28,7 +28,7 @@ class FavoritesViewModel: ObservableObject {
             let favorites = favoriteDesserts.map { favoriteDessert in
                 let id = favoriteDessert.id
                 let name = favoriteDessert.name
-                let imageURL = favoriteDessert.imageURL ?? ""
+                let imageURL = favoriteDessert.imageURL
                 return Dessert(title: name, imageURL: imageURL, id: id)
             }
             return favorites

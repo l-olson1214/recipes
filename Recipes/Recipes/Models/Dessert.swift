@@ -11,7 +11,7 @@ import Foundation
 
 struct Dessert: Codable, Identifiable, Hashable {
     let title: String
-    let imageURL: String
+    let imageURL: String?
     let id: String
 
     enum CodingKeys: String, CodingKey {
